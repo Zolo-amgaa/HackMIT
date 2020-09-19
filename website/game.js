@@ -122,7 +122,6 @@ function showWord() {
 
 // Countdown timer
 function countup() {
-  countDown--;
   if (countDown == 0) {
     countDown = 30;
   }
