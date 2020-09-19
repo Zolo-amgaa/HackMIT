@@ -53,14 +53,25 @@ io.on('connection', function(socket){
     setInterval(countup,1000)
   }
 
+  socket.on('sendName', (name)=>{
+    for (let p = 0; p<players.length;p++)
+    {
+      if (socket.id==players[p].id)
+      {
+        players[p].name = name;
+      }
+    }
+  })
 
   socket.on('disconnect', () => {
+
     newPlayers = [];
+
     for (let k = 0; k < players.length; k++)
     {
         if (players[k] != null)
         {
-          newPlayers.add(players[k]);
+          newPlayers.push(players[k]);
         } else
          {continue;}
     }
@@ -133,7 +144,7 @@ function selectionSort(){
 }
 
 function countup(){
-  if (time == 30) {
+  if (time == 15) {
     eliminateLowest();
     time=0;
   }
@@ -149,10 +160,23 @@ function eliminateLowest()
 {
   selectionSort();
 
-  var name = players[numberOfPlayers-1].name;
-  var wpm = players[numberOfPlayers-1].wpm;
-  var id = players[numberOfPlayers-1].id;
-  delete players[numberOfPlayers-1];
+  newPlayers = [];
+
+  for (let k = 0; k < players.length; k++)
+  {
+      if (players[k] != null)
+      {
+        newPlayers.push(players[k]);
+      } else
+       {continue;}
+  }
+  players = newPlayers;
+  numberOfPlayers--;
+
+  var name = players[players.length-1].name;
+  var wpm = players[players.length-1].wpm;
+  var id = players[players.length-1].id;
+  players.splice(players.length - 1,1);
   numberOfPlayers--;
   io.to(id).emit("end",  {name: name, wpm: wpm})
   console.log("Eliminating " + name + "(" + id + ")");

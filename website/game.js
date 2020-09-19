@@ -15,8 +15,10 @@ const difficulties = [
     "medium",
     "long"
 ]
-socket.on('connect',(name)=> {
+socket.on('connect',()=> {
+  this.name = localStorage.getItem("name");
   console.log('socket on: ' + localStorage.getItem("name"));
+  socket.emit('sendName', (this.name));
 });
 
 socket.on('gameReady', ()=> {
@@ -44,7 +46,7 @@ let wpm = 0;
 let time = 0;
 let score = 0;
 let isPlaying;
-let countDown = 30;
+let countDown = 15;
 
 // DOM Elements
 const wordInput = document.querySelector('#word-input');
@@ -156,7 +158,7 @@ function countup() {
     //eliminate someone
     socket.emit()
 
-    countDown = 30;
+    countDown = 15;
   }
   if (countDown <= 10) {
     document.getElementById("time").style.color = "red";
