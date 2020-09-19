@@ -140,7 +140,7 @@ function selectionSort(){
     players[k].rank = k;
   }
   calculateLevels();
-
+  io.emit('leaderboard', players)
 }
 
 function countup(){
