@@ -7,7 +7,7 @@ var number = 0;
 
 //App Setup
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 var server = app.listen(port, () => {
   console.log(`Example app listening at http://localhost:3000`);
