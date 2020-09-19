@@ -37,6 +37,7 @@ socket.on('end', (data)=> {
   localStore.setItem("name", data.name);
   localStore.setItem("score", score);
   localStore.setItem("rank", data.rank);
+
   window.location.href = "gameover.html";
   console.log ("DEAD");
 
@@ -46,7 +47,7 @@ let wpm = 0;
 let time = 0;
 let score = 0;
 let isPlaying;
-let countDown = 15;
+let countDown = 30;
 
 // DOM Elements
 const wordInput = document.querySelector('#word-input');
@@ -158,7 +159,7 @@ function countup() {
     //eliminate someone
     socket.emit()
 
-    countDown = 15;
+    countDown = 30;
   }
   if (countDown <= 10) {
     document.getElementById("time").style.color = "red";

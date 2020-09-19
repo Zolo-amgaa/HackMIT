@@ -144,7 +144,7 @@ function selectionSort(){
 }
 
 function countup(){
-  if (time == 15) {
+  if (time == 30) {
     eliminateLowest();
     time=0;
   }
