@@ -1,4 +1,4 @@
-  
+
 window.addEventListener('load', init);
 
 // Globals
@@ -19,7 +19,7 @@ const scoreDisplay = document.querySelector('#score');
 const timeDisplay = document.querySelector('#time');
 const message = document.querySelector('#message');
 const seconds = document.querySelector('#seconds');
-const wpmDisplay = document.querySelector("#wpm"); 
+const wpmDisplay = document.querySelector("#wpm");
 
 const words = [
   'a'
@@ -37,9 +37,9 @@ function init() {
   // Check game status
   setInterval(checkStatus, 50);
 
-  //Check wpm 
-  setInterval(updateWpm, 1000); 
-  time = 0; 
+  //Check wpm
+  setInterval(updateWpm, 1000);
+  time = 0;
 }
 
 // Start match
@@ -49,7 +49,7 @@ function startMatch() {
     showWord(words);
     wordInput.value = '';
     score++;
-    
+
   }
 
   // If score is -1, display 0
@@ -61,8 +61,8 @@ function startMatch() {
 }
 
 function updateWpm() {
-    wpm = Math.round((score/time)*60); 
-    wpmDisplay.innerHTML = wpm; 
+    wpm = Math.round((score/time)*60);
+    wpmDisplay.innerHTML = wpm;
 }
 // Match currentWord to wordInput
 function matchWords() {
@@ -85,14 +85,14 @@ function showWord(words) {
 
 // Countdown timer
 function countup() {
-  time++; 
+  time++;
   // Show time
   timeDisplay.innerHTML = time;
-  console.log(wpm); 
+  console.log(wpm);
 }
 
 // Check game status
-function checkStatus() { 
+function checkStatus() {
 //   if (!isPlaying) {
 //     message.innerHTML = 'Game Over!!!';
 //     score = -1;
