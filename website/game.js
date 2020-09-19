@@ -11,6 +11,12 @@ async function fetchWordString() {
   return data;
 }
 
+var shortWords;
+
+var mediumWords;
+
+var longWords;
+
 //'Main' zone
 (async function(){
   //Fetch list of words
@@ -33,7 +39,15 @@ async function fetchWordString() {
     }
   }
 
-  window.addEventListener('load', init);
+shortWords = wordListAlpha;
+
+mediumWords = wordListBeta;
+
+longWords = wordListGamma;
+
+})()
+
+window.addEventListener('load', init);
 
 // Globals
 let difficulty = 'medium';
@@ -60,8 +74,6 @@ socket.on('sendDifficulty', (data) => {
 
 })
 
-
-
 let wpm = 0;
 let time = 0;
 let score = 0;
@@ -77,14 +89,6 @@ const message = document.querySelector('#message');
 const seconds = document.querySelector('#seconds');
 const wpmDisplay = document.querySelector("#wpm");
 const accuracyDisplay = document.querySelector("#accuracy");
-
-
-const shortWords = wordListAlpha;
-
-const mediumWords = wordListBeta;
-
-const longWords = wordListGamma;
-
 
 function init()
 {
@@ -182,6 +186,3 @@ function countup() {
   timeDisplay.innerHTML = countDown;
   console.log("WPM: " + wpm + "Score: " + score + "\nTime: " + time);
 }
-
-})()
-
