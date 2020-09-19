@@ -6,13 +6,16 @@ window.addEventListener('load', init);
 var socket = io.connect('http://localhost:3000');
 
 const difficulties = [
-    "short", 
-    "medium", 
+    "short",
+    "medium",
     "long"
 ]
+socket.on('connection',()=> {
+  socket.send('sending');
+});
 
 
-let difficulty = difficulties[0]; 
+let difficulty = difficulties[0];
 let wpm = 0;
 let time = 0;
 let score = 0;
@@ -33,7 +36,7 @@ const shortWords = [
 
 const mediumWords = [
   'medium'
-]; 
+];
 
 const longWords = [
   'long'
@@ -91,15 +94,15 @@ function matchWords() {
 
 // Pick & show random word
 function showWord() {
-  let words; 
+  let words;
   if(difficulty == "short"){
-    words = shortWords; 
+    words = shortWords;
   }
   if(difficulty == "medium"){
-    words = mediumWords; 
+    words = mediumWords;
   }
   if(difficulty == "long"){
-    words = longWords; 
+    words = longWords;
   }
   // Generate random array index
   const randIndex = Math.floor(Math.random() * words.length);
