@@ -79,6 +79,11 @@ io.on('connection', function(socket){
 
 function countDown()
 {
+ if(waitTime == 0) {
+
+ } 
+ else {
   waitTime--;
   console.log("Wait Time: " + waitTime);
+ }
 }

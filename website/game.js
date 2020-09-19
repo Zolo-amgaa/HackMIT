@@ -14,7 +14,8 @@ const difficulties = [
 socket.on('connection',()=> {
   console.log('socket on');
 });
-socket.on('gameReady',()=> {
+socket.on('gameReady',(data)=> {
+  console.log(data); 
   console.log('gameReady received');
 });
 
