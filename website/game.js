@@ -22,7 +22,7 @@ let wpm = 0;
 let time = 0;
 let score = 0;
 let isPlaying;
-let countDown = 30; 
+let countDown = 30;
 
 // DOM Elements
 const wordInput = document.querySelector('#word-input');
@@ -85,7 +85,7 @@ function startMatch() {
 function updateWpm() {
     wpm = Math.round((score/time)*60);
     wpmDisplay.innerHTML = wpm;
-    socket.emit('wpm', wpm); 
+    socket.emit('wpm', wpm);
 }
 // Match currentWord to wordInput
 function matchWords() {
@@ -122,7 +122,7 @@ function showWord() {
 
 // Countdown timer
 function countup() {
-  countDown--; 
+  countDown--;
   time++;
   // Show time
   timeDisplay.innerHTML = countDown;

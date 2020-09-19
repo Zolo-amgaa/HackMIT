@@ -2,7 +2,7 @@
 const express = require('express')
 const socket = require('socket.io')
 
-var players = []; 
+var players = [];
 var numberOfPlayers = 0;
 
 //App Setup
@@ -16,35 +16,35 @@ var server = app.listen(port, () => {
 //Static Files
 app.use(express.static('./website'));
 
-//player check 
+//player check
 
 
 //Socket Setup
 var io = socket(server);
 io.on('connection', function(socket){
   if(numberOfPlayers < 4) {
-    socket.emit('gameReady', false); 
+    socket.emit('gameReady', false);
   }
   else {
-    socket.emit("gameReady", true); 
+    socket.emit('gameReady', true);
   }
   console.log('Connection made for id: ',socket.id);
-  let i; 
+  let i;
   for(i = 0; i<players.length;i++) {
       if(players[i].id == socket.id) {
-        break; 
+        break;
       }
-      
+
   }
   if(i == players.length) {
-      let newPlayer = new Object(); 
-      newPlayer.id = socket.id; 
-      newPlayer.wpm = 0; 
-      players.push(newPlayer); 
-      numberOfPlayers++; 
+      let newPlayer = new Object();
+      newPlayer.id = socket.id;
+      newPlayer.wpm = 0;
+      players.push(newPlayer);
+      numberOfPlayers++;
   }
-  
- 
+
+
   socket.on('disconnect', () => {
     numberOfPlayers--;
     console.log('user disconnected');
@@ -52,12 +52,10 @@ io.on('connection', function(socket){
   socket.on('wpm', (data) => {
     for(let i = 0; i<players.length;i++) {
       if(players[i].id == socket.id) {
-        players[i].wpm = data; 
+        players[i].wpm = data;
       }
-      
+
   }
-    console.log(players); 
+    console.log(players);
   })
 });
-
-
