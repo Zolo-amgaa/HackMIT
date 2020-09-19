@@ -3,7 +3,7 @@ window.addEventListener('load', init);
 
 // Globals
 
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect();
 
 const difficulties = [
     "short",
@@ -95,7 +95,7 @@ function matchWords() {
 }
 
 function accuracy() {
-  
+
 }
 
 // Pick & show random word
