@@ -95,7 +95,7 @@ function matchWords() {
 }
 
 function accuracy() {
-  
+
 }
 
 // Pick & show random word
