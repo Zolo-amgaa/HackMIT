@@ -10,6 +10,9 @@ const difficulties = [
     "medium",
     "long"
 ]
+socket.on('connection',()=> {
+  socket.send('sending');
+});
 
 
 let difficulty = difficulties[0];
