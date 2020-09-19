@@ -3,11 +3,11 @@ window.addEventListener('load', init);
 
 // Globals
 
+var socket = io.connect('http://localhost:3000');
 
 
 
-
-let wpm = 0; 
+let wpm = 0;
 let time = 0;
 let score = 0;
 let isPlaying;
