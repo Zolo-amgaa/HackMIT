@@ -53,6 +53,7 @@ io.on('connection', function(socket) {
     socket.emit('gameReady', true);
   } else if (waitTime <= 0 && numberOfPlayers >= 2) {
     socket.emit('gameReady', true);
+    // yes
   }
 
 
