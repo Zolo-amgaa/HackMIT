@@ -17,11 +17,7 @@ app.use(express.static('./website'));
 var players = [];
 var numberOfPlayers = 0;
 
-/*
-var waitTime = 15;
-const waitInterval = 15;
-setInterval(countDown, 1000);
-*/
+
 
 //Socket Setup
 var io = socket(server);
@@ -67,3 +63,26 @@ io.on('connection', function(socket){
   }
   })
 });
+
+function selectionSort(players){
+  var minIdx, temp,
+      len = players.length;
+  for(var i = 0; i < len; i++){
+    minIdx = i;
+    for(var  j = i+1; j<len; j++){
+       if(players[j].wpm < players[minIdx].wpm){
+          minIdx = j;
+       }
+    }
+    temp = players[i];
+    players[i] = players[minIdx];
+    players[minIdx] = temp;
+  }
+  players.reverse();
+  for(let k = 0; k < len; k++) {
+    players[k].rank = k;
+  }
+  return players;
+}
+
+setInterval(selectionSort(players), 500);
