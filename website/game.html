@@ -5,25 +5,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>WordBeater</title>
+  <title>TypeOff</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css" />
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" integrity="sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA==" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-dark text-white ">
-  <header class="bg-secondary text-center p-3 mb-5">
-    <a class="btn btn-outline-dark" style="float: left;" href="index.html">BACK</a>
-
-    <h1 class="main-title">WordBeater</h1>
+<body class="text-white">
+  <header class="text-center p-3 mb-5">
+    <a class="btn btn-dark" style="float: left;" href="index.html">BACK</a>
   </header>
   <div class="container text-center">
+
+    <h2 class="main-title">TypeOff</h2>
+
 
     <!-- Word & Input -->
     <div class="row">
       <div class="col-md-6 mx-auto">
-        <p class="lead">Type The Given Word As Fast As You Can!</p>
+        <!-- <p class="lead">Type The Given Word As Fast As You Can!</p> -->
         <h2 class="display-2 mb-5" id="current-word">hello</h2>
         <input type="text" class="form-control form-control-lg" placeholder="Start typing..." id="word-input" autofocus>
         <h4 class="mt-3" id="message"></h4>
@@ -31,7 +36,7 @@
         <!-- Time & Score Columns -->
         <div class="row mt-5">
           <div class="col-md-6">
-            <h3>Time Left:
+            <h3>Time:
               <span id="time">0</span>
             </h3>
           </div>
@@ -39,9 +44,9 @@
             <h3>WPM:
               <span id="wpm">0</span>
             </h3>
-            <h3>Accuracy:
+            <!-- <h3>Accuracy:
               <span id="accuracy">0</span>
-            </h3>
+            </h3> -->
           </div>
         </div>
 
