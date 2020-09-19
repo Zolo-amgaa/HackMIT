@@ -14,7 +14,7 @@ var server = app.listen(port, () => {
 })
 
 //Static Files
-app.use(express.static('../website'));
+app.use(express.static('./website'));
 
 //Socket Setup
 var io = socket(server);
