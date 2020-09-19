@@ -1,6 +1,7 @@
 window.addEventListener('load', init);
 
 // Globals
+let difficulty = 'medium';
 
 var socket = io.connect();
 
@@ -18,8 +19,12 @@ socket.on('gameReady', ()=> {
   startGame();
 });
 
+socket.on('sendDifficulty', (data) => {
+  difficulty = data;
+})
 
-let difficulty = difficulties[0];
+
+
 let wpm = 0;
 let time = 0;
 let score = 0;
@@ -38,14 +43,17 @@ const accuracyDisplay = document.querySelector("#accuracy");
 
 
 const shortWords = [
+  'a',
   'short'
 ];
 
 const mediumWords = [
+  'aaaa',
   'medium'
 ];
 
 const longWords = [
+  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
   'long'
 ]
 
@@ -59,15 +67,16 @@ function startGame() {
   // Show number of seconds in UI
   // Load word from array
   showWord();
+
+  //showWord();
   // Start matching on word input
   wordInput.addEventListener('input', startMatch);
   // Call countdown every second
   setInterval(countup, 1000);
-  // Check game status
-  setInterval(checkStatus, 50);
 
   //Check wpm
   setInterval(updateWpm, 1000);
+
   time = 0;
 }
 
@@ -78,11 +87,11 @@ function startMatch() {
     showWord();
     wordInput.value = '';
     score++;
-
+    console.log(score);
   }
 
   // If score is -1, display 0
-  if (score === -1) {
+  if (score == -1) {
     scoreDisplay.innerHTML = 0;
   } else {
     scoreDisplay.innerHTML = score;
@@ -93,6 +102,7 @@ function updateWpm() {
     wpm = Math.round((score/time)*60);
     wpmDisplay.innerHTML = wpm;
     socket.emit('wpm', wpm);
+
 }
 // Match currentWord to wordInput
 function matchWords() {
@@ -106,9 +116,6 @@ function matchWords() {
   }
 }
 
-function accuracy() {
-
-}
 
 // Pick & show random word
 function showWord() {
@@ -122,6 +129,7 @@ function showWord() {
   if(difficulty == "long"){
     words = longWords;
   }
+  console.log(difficulty);
   // Generate random array index
   const randIndex = Math.floor(Math.random() * words.length);
   // Output random word
@@ -131,6 +139,7 @@ function showWord() {
 // Countdown timer
 function countup() {
   if (countDown == 0) {
+    //eliminate someone
     countDown = 30;
   }
   if (countDown <= 10) {
@@ -143,13 +152,5 @@ function countup() {
   time++;
   // Show time
   timeDisplay.innerHTML = countDown;
-  console.log(wpm);
-}
-
-// Check game status
-function checkStatus() {
-//   if (!isPlaying) {
-//     message.innerHTML = 'Game Over!!!';
-//     score = -1;
-//   }
+  console.log("WPM: " + wpm + "Score: " + score + "\nTime: " + time);
 }

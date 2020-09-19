@@ -34,7 +34,8 @@ io.on('connection', function(socket){
     newPlayer = new Object();
     newPlayer.id = socket.id;
     newPlayer.wpm = 0;
-    newPlayer.rank = 0
+    newPlayer.rank = 0;
+    newPlayer.level
     newPlayer.name = ""
     players.push(newPlayer);
     numberOfPlayers++;
@@ -46,7 +47,7 @@ io.on('connection', function(socket){
 
   if (numberOfPlayers == 4)
   {
-    io.sockets.emit('gameReady');
+    io.emit('gameReady');
   }
 
 
@@ -64,7 +65,37 @@ io.on('connection', function(socket){
   })
 });
 
-function selectionSort(players){
+function calculateLevels()
+{
+  if (players.length == 2)
+  {
+    io.emit("sendDifficulty", "medium");
+  }
+  if (players.length == 3)
+  {
+    io.to(players[0].id).emit("sendDifficulty", "long")
+    io.to(players[1].id).emit("sendDifficulty", "medium")
+    io.to(players[2].id).emit("sendDifficulty", "short")
+  }
+
+  for (let j = 0; j < players.length;j++)
+  {
+
+    let level = (players[j].rank+1) / numberOfPlayers;
+    let difficulty = -1;
+
+    if (level <= 0.25)
+      difficulty = "long";
+    else if (level > 0.25 && level <= 0.75)
+      difficulty = "medium";
+    else
+      difficulty = "short";
+
+      io.to(players[j].id).emit("sendDifficulty", difficulty)
+  }
+}
+
+function selectionSort(){
   var minIdx, temp,
       len = players.length;
   for(var i = 0; i < len; i++){
@@ -82,7 +113,8 @@ function selectionSort(players){
   for(let k = 0; k < len; k++) {
     players[k].rank = k;
   }
-  return players;
+  calculateLevels();
+
 }
 
-setInterval(selectionSort(players), 500);
+setInterval(selectionSort, 1000);
