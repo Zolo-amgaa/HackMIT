@@ -3,15 +3,9 @@ window.addEventListener('load', init);
 
 // Globals
 
-// Available Levels
-const levels = {
-  easy: 5,
-  medium: 3,
-  hard: 1
-};
 
-// To change level
-const currentLevel = levels.medium;
+
+
 
 let wpm = 0; 
 let time = 0;
@@ -28,37 +22,12 @@ const seconds = document.querySelector('#seconds');
 const wpmDisplay = document.querySelector("#wpm"); 
 
 const words = [
-  'hat',
-  'river',
-  'lucky',
-  'statue',
-  'generate',
-  'stubborn',
-  'cocktail',
-  'runaway',
-  'joke',
-  'developer',
-  'establishment',
-  'hero',
-  'javascript',
-  'nutrition',
-  'revolver',
-  'echo',
-  'siblings',
-  'investigate',
-  'horrendous',
-  'symptom',
-  'laughter',
-  'magic',
-  'master',
-  'space',
-  'definition'
+  'a'
 ];
 
 // Initialize Game
 function init() {
   // Show number of seconds in UI
-  seconds.innerHTML = currentLevel;
   // Load word from array
   showWord(words);
   // Start matching on word input
@@ -67,6 +36,9 @@ function init() {
   setInterval(countup, 1000);
   // Check game status
   setInterval(checkStatus, 50);
+
+  //Check wpm 
+  setInterval(updateWpm, 1000); 
   time = 0; 
 }
 
@@ -77,8 +49,7 @@ function startMatch() {
     showWord(words);
     wordInput.value = '';
     score++;
-    wpm = Math.round((score/time)*60); 
-    wpmDisplay.innerHTML = wpm; 
+    
   }
 
   // If score is -1, display 0
@@ -86,10 +57,13 @@ function startMatch() {
     scoreDisplay.innerHTML = 0;
   } else {
     scoreDisplay.innerHTML = score;
-    wpmDisplay = wpm; 
   }
 }
 
+function updateWpm() {
+    wpm = Math.round((score/time)*60); 
+    wpmDisplay.innerHTML = wpm; 
+}
 // Match currentWord to wordInput
 function matchWords() {
   if (wordInput.value === currentWord.innerHTML) {
