@@ -1,4 +1,3 @@
-
 window.addEventListener('load', init);
 
 // Globals
@@ -91,6 +90,7 @@ function updateWpm() {
 function matchWords() {
   if (wordInput.value === currentWord.innerHTML) {
     message.innerHTML = 'Correct!!!';
+    message.style.color = "green";
     return true;
   } else {
     message.innerHTML = '';
