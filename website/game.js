@@ -5,6 +5,8 @@ window.addEventListener('load', init);
 
 var socket = io.connect();
 
+
+
 const difficulties = [
     "short",
     "medium",
@@ -82,6 +84,7 @@ function startMatch() {
 function updateWpm() {
     wpm = Math.round((score/time)*60);
     wpmDisplay.innerHTML = wpm;
+    socket.emit('wpm', wpm); 
 }
 // Match currentWord to wordInput
 function matchWords() {
