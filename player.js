@@ -14,3 +14,4 @@ class Player {
   }
 
 }
+export {Player};

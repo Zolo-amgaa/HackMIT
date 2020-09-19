@@ -2,7 +2,6 @@
 const express = require('express')
 const socket = require('socket.io')
 
-import player;
 //App Setup
 const app = express()
 const port = process.env.PORT || 3000
@@ -13,6 +12,7 @@ var server = app.listen(port, () => {
 
 //Static Files
 app.use(express.static('./website'));
+
 
 //Player Management
 var players = [];
@@ -37,7 +37,9 @@ io.on('connection', function(socket){
 
   }
   if(i == players.length) {
-      let newPlayer = new Player(socket.id);
+      let newPlayer = new Object();
+      newPlayer.id = socket.id;
+      newPlayer.wpm = 0;
       players.push(newPlayer);
       numberOfPlayers++;
   }
