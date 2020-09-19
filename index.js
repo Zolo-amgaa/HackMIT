@@ -19,7 +19,6 @@ var numberOfPlayers = 0;
 
 var waitTime = 15;
 const waitInterval = 15;
-
 setInterval(countDown, 1000);
 
 
@@ -37,13 +36,11 @@ io.on('connection', function(socket){
 
   }
   if(i == players.length) {
-    newPlayer = new Object();
-    newPlayer.id = socket.id;
-    newPlayer.wpm = 0;
-    newPlayer.rank = 0
-    newPlayer.name = ""
-    players.push(newPlayer);
-    numberOfPlayers++;
+    newPlayer = new Object(); 
+    newPlayer.id = socket.id; 
+    newPlayer.wpm = 0; 
+      players.push(newPlayer);
+      numberOfPlayers++;
   }
 
   console.log("Player joined with id: " + socket.id +"\nNumber of players: " + numberOfPlayers);
@@ -52,21 +49,19 @@ io.on('connection', function(socket){
 
   if (numberOfPlayers < 2)
   {
-    io.sockets.emit('gameReady', false);
+    socket.emit('gameReady', false);
   }
   else if (numberOfPlayers == 4)
   {
-    console.log("4 has been reached");
+    console.log("4 has been reached"); 
     io.sockets.emit('gameReady', true);
   } else if(waitTime <= 0 && numberOfPlayers >= 2)
   {
-    io.sockets.emit('gameReady', true);
-  }
-  else{
-    io.sockets.emit('gameReady', false);
+    socket.emit('gameReady', true);
   }
 
-  
+
+
 
   socket.on('disconnect', () => {
     numberOfPlayers--;
@@ -84,11 +79,9 @@ io.on('connection', function(socket){
 
 function countDown()
 {
- console.log(players);
-
  if(waitTime == 0) {
 
- }
+ } 
  else {
   waitTime--;
   console.log("Wait Time: " + waitTime);

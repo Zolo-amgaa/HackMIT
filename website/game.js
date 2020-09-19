@@ -12,18 +12,14 @@ const difficulties = [
     "long"
 ]
 socket.on('connection',()=> {
-
-  console.log('socket on: ' + localStorage.getItem("name"));
-
-
+  console.log('socket on');
+  socket.on('gameReady',(data)=> {
+    console.log(data); 
+    console.log('gameReady received');
+  });
 });
 
-socket.on('gameReady',(data)=> {
 
-  console.log(data);
-  console.log('gameReady received');
-
-});
 
 
 let difficulty = difficulties[0];
