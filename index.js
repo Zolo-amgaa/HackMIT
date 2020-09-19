@@ -21,6 +21,7 @@ app.use(express.static('./website'));
 
 //Socket Setup
 var io = socket(server);
+
 io.on('connection', function(socket){
   if(numberOfPlayers < 4) {
     socket.emit('gameReady', false);
