@@ -23,10 +23,23 @@ io.on('connection', function(socket){
   console.log('Connection made for id: ',socket.id);
   number++;
   console.log(number);
+
+  io.on('close', function(socket){
+    console.log('Connection lost for id: ',socket.id);
+    number--;
+    console.log(number);
+  });
+  io.onmessage = function (e) {
+    console.log('Server: ' + e.data);
+  };
+  io.on('wpm', (wpm) => {
+    console.log(wpm)
+  })
+  
 });
 
-io.on('disconnect', function(socket){
-  console.log('Connection lost for id: ',socket.id);
-  number--;
-  console.log(number);
-});
+io.on('wpm', function(data){
+  console.log(data.message); 
+})
+
+

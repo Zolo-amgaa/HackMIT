@@ -3,16 +3,19 @@ window.addEventListener('load', init);
 
 // Globals
 
-var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://192.168.0.110:3000');
 
 const difficulties = [
     "short",
     "medium",
     "long"
 ]
-socket.on('connection',()=> {
-  socket.send('sending');
-});
+
+socket.emit('wpm', {
+    message:"test"
+})
+
+
 
 
 let difficulty = difficulties[0];
