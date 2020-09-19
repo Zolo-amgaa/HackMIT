@@ -14,7 +14,7 @@ const levels = {
 const currentLevel = levels.medium;
 
 let wpm = 0; 
-let time = currentLevel;
+let time = 0;
 let score = 0;
 let isPlaying;
 
@@ -66,16 +66,17 @@ function init() {
   //setInterval(countdown, 1000);
   // Check game status
   setInterval(checkStatus, 50);
+  time = 0; 
 }
 
 // Start match
 function startMatch() {
   if (matchWords()) {
     isPlaying = true;
-    time = 0; 
     showWord(words);
     wordInput.value = '';
     score++;
+    wpm = (score/time)*60; 
   }
 
   // If score is -1, display 0
