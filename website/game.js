@@ -5,8 +5,14 @@ window.addEventListener('load', init);
 
 var socket = io.connect('http://localhost:3000');
 
+const difficulties = [
+    "short", 
+    "medium", 
+    "long"
+]
 
 
+let difficulty = difficulties[0]; 
 let wpm = 0;
 let time = 0;
 let score = 0;
@@ -21,15 +27,23 @@ const message = document.querySelector('#message');
 const seconds = document.querySelector('#seconds');
 const wpmDisplay = document.querySelector("#wpm");
 
-const words = [
-  'a'
+const shortWords = [
+  'short'
 ];
+
+const mediumWords = [
+  'medium'
+]; 
+
+const longWords = [
+  'long'
+]
 
 // Initialize Game
 function init() {
   // Show number of seconds in UI
   // Load word from array
-  showWord(words);
+  showWord();
   // Start matching on word input
   wordInput.addEventListener('input', startMatch);
   // Call countdown every second
@@ -46,7 +60,7 @@ function init() {
 function startMatch() {
   if (matchWords()) {
     isPlaying = true;
-    showWord(words);
+    showWord();
     wordInput.value = '';
     score++;
 
@@ -76,7 +90,17 @@ function matchWords() {
 }
 
 // Pick & show random word
-function showWord(words) {
+function showWord() {
+  let words; 
+  if(difficulty == "short"){
+    words = shortWords; 
+  }
+  if(difficulty == "medium"){
+    words = mediumWords; 
+  }
+  if(difficulty == "long"){
+    words = longWords; 
+  }
   // Generate random array index
   const randIndex = Math.floor(Math.random() * words.length);
   // Output random word
