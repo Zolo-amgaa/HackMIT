@@ -12,7 +12,10 @@ const difficulties = [
     "long"
 ]
 socket.on('connection',()=> {
-  socket.send('sending');
+  console.log('socket on');
+});
+socket.on('gameReady',()=> {
+  console.log('gameReady received');
 });
 
 
