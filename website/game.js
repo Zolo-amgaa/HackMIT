@@ -38,14 +38,17 @@ const accuracyDisplay = document.querySelector("#accuracy");
 
 
 const shortWords = [
+  'a',
   'short'
 ];
 
 const mediumWords = [
+  'aaaa',
   'medium'
 ];
 
 const longWords = [
+  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
   'long'
 ]
 
