@@ -91,7 +91,6 @@ function updateWpm() {
 function matchWords() {
   if (wordInput.value === currentWord.innerHTML) {
     message.innerHTML = 'Correct!!!';
-    message.style.color = "green";
     return true;
   } else {
     message.innerHTML = '';
@@ -124,7 +123,6 @@ function showWord() {
 // Countdown timer
 function countup() {
   countDown--;
-<<<<<<< HEAD
   if (countDown == 0) {
     countDown = 30;
   }
@@ -134,8 +132,7 @@ function countup() {
   else {
     document.getElementById("time").style.color = "white";
   }
-=======
->>>>>>> 9b0c734d7a77d430ccdac92ee735503c4c9a4cda
+  countDown--;
   time++;
   // Show time
   timeDisplay.innerHTML = countDown;
