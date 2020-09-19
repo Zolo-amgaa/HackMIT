@@ -22,7 +22,7 @@ let wpm = 0;
 let time = 0;
 let score = 0;
 let isPlaying;
-let countDown = 30; 
+let countDown = 30;
 
 // DOM Elements
 const wordInput = document.querySelector('#word-input');
@@ -85,12 +85,13 @@ function startMatch() {
 function updateWpm() {
     wpm = Math.round((score/time)*60);
     wpmDisplay.innerHTML = wpm;
-    socket.emit('wpm', wpm); 
+    socket.emit('wpm', wpm);
 }
 // Match currentWord to wordInput
 function matchWords() {
   if (wordInput.value === currentWord.innerHTML) {
     message.innerHTML = 'Correct!!!';
+    message.style.color = "green";
     return true;
   } else {
     message.innerHTML = '';
@@ -122,7 +123,16 @@ function showWord() {
 
 // Countdown timer
 function countup() {
-  countDown--; 
+  countDown--;
+  if (countDown == 0) {
+    countDown = 30;
+  }
+  if (countDown <= 10) {
+    document.getElementById("time").style.color = "red";
+  }
+  else {
+    document.getElementById("time").style.color = "white";
+  }
   time++;
   // Show time
   timeDisplay.innerHTML = countDown;
