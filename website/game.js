@@ -45,10 +45,10 @@ socket.on('end', (data)=> {
 
 socket.on('leaderboard', (players)=> {
   players = players; 
-  firstRank.innerHTML = players[0]; 
-  secondRank.innerHTML = players[1]; 
-  thirdRank.innerHTML = players[2]; 
-  fourthRank.innerHTML =  players[3]; 
+  firstRank.innerHTML = "1. " + players[0].name; 
+  secondRank.innerHTML = "2. " +players[1].name; 
+  thirdRank.innerHTML = "3. " +players[2].name; 
+  fourthRank.innerHTML =  "4. " +players[3].name; 
 })
 
 let wpm = 0;
