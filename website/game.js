@@ -20,6 +20,7 @@ socket.on('gameReady',(data)=> {
 });
 
 
+
 let difficulty = difficulties[0];
 let wpm = 0;
 let time = 0;

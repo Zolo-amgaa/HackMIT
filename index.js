@@ -51,9 +51,10 @@ io.on('connection', function(socket){
   {
     socket.emit('gameReady', false);
   }
-  else if (numberOfPlayers == 10)
+  else if (numberOfPlayers == 4)
   {
-    socket.emit('gameReady', true);
+    console.log("4 has been reached"); 
+    io.sockets.emit('gameReady', true);
   } else if(waitTime <= 0 && numberOfPlayers >= 2)
   {
     socket.emit('gameReady', true);
@@ -73,7 +74,6 @@ io.on('connection', function(socket){
       }
 
   }
-    console.log(players);
   })
 });
 
