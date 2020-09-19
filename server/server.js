@@ -16,7 +16,7 @@ var server = app.listen(port, () => {
 })
 
 //Static Files
-app.use(express.static());
+app.use(express.static('../startbootstrap-grayscale-gh-pages'));
 
 //Socket Setup
 var io = socket(server);
