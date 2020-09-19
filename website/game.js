@@ -15,6 +15,7 @@ socket.on('connect',(name)=> {
 
 socket.on('gameReady', ()=> {
   console.log('gameReady received');
+  startGame();
 });
 
 
@@ -48,8 +49,13 @@ const longWords = [
   'long'
 ]
 
+
+function init()
+{
+  console.log(name + " joined the game lobby.");
+}
 // Initialize Game
-function init() {
+function startGame() {
   // Show number of seconds in UI
   // Load word from array
   showWord();

@@ -27,7 +27,7 @@ setInterval(countDown, 1000);
 var io = socket(server);
 
 io.on('connection', function(socket){
-  
+
   let i=0;
   for(i = 0; i<players.length;i++) {
       if(players[i].id == socket.id) {
