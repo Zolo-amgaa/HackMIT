@@ -25,6 +25,7 @@ const scoreDisplay = document.querySelector('#score');
 const timeDisplay = document.querySelector('#time');
 const message = document.querySelector('#message');
 const seconds = document.querySelector('#seconds');
+const wpmDisplay = document.querySelector("#wpm"); 
 
 const words = [
   'hat',
@@ -63,7 +64,7 @@ function init() {
   // Start matching on word input
   wordInput.addEventListener('input', startMatch);
   // Call countdown every second
-  //setInterval(countdown, 1000);
+  setInterval(countup, 1000);
   // Check game status
   setInterval(checkStatus, 50);
   time = 0; 
@@ -76,7 +77,8 @@ function startMatch() {
     showWord(words);
     wordInput.value = '';
     score++;
-    wpm = (score/time)*60; 
+    wpm = Math.round((score/time)*60); 
+    wpmDisplay.innerHTML = wpm; 
   }
 
   // If score is -1, display 0
@@ -84,6 +86,7 @@ function startMatch() {
     scoreDisplay.innerHTML = 0;
   } else {
     scoreDisplay.innerHTML = score;
+    wpmDisplay = wpm; 
   }
 }
 
@@ -107,17 +110,17 @@ function showWord(words) {
 }
 
 // Countdown timer
-function countdown() {
-  // Make sure time is not run out
+function countup() {
   time++; 
   // Show time
   timeDisplay.innerHTML = time;
+  console.log(wpm); 
 }
 
 // Check game status
-function checkStatus() {
-  if (!isPlaying && time === 0) {
-    message.innerHTML = 'Game Over!!!';
-    score = -1;
-  }
+function checkStatus() { 
+//   if (!isPlaying) {
+//     message.innerHTML = 'Game Over!!!';
+//     score = -1;
+//   }
 }
