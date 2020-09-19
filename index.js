@@ -17,24 +17,22 @@ app.use(express.static('./website'));
 var players = [];
 var numberOfPlayers = 0;
 
+/*
 var waitTime = 15;
 const waitInterval = 15;
-
 setInterval(countDown, 1000);
-
+*/
 
 //Socket Setup
 var io = socket(server);
 
-
 io.on('connection', function(socket){
-
+  
   let i=0;
   for(i = 0; i<players.length;i++) {
       if(players[i].id == socket.id) {
         break;
       }
-
   }
   if(i == players.length) {
     newPlayer = new Object();
@@ -48,49 +46,24 @@ io.on('connection', function(socket){
 
   console.log("Player joined with id: " + socket.id +"\nNumber of players: " + numberOfPlayers);
 
-  waitTime = waitInterval;
+  //waitTime = waitInterval;
 
-  if (numberOfPlayers < 2)
+  if (numberOfPlayers == 4)
   {
-    io.sockets.emit('gameReady', false);
-  }
-  else if (numberOfPlayers == 4)
-  {
-    console.log("4 has been reached");
-    io.sockets.emit('gameReady', true);
-  } else if(waitTime <= 0 && numberOfPlayers >= 2)
-  {
-    io.sockets.emit('gameReady', true);
-  }
-  else{
-    io.sockets.emit('gameReady', false);
+    io.sockets.emit('gameReady');
   }
 
-  
 
   socket.on('disconnect', () => {
     numberOfPlayers--;
-    console.log('user disconnected');
+    console.log('USER DISCONNECTED');
   });
+
   socket.on('wpm', (data) => {
     for(let i = 0; i<players.length;i++) {
       if(players[i].id == socket.id) {
         players[i].wpm = data;
       }
-
   }
   })
 });
-
-function countDown()
-{
- console.log(players);
-
- if(waitTime == 0) {
-
- }
- else {
-  waitTime--;
-  console.log("Wait Time: " + waitTime);
- }
-}

@@ -4,25 +4,17 @@ window.addEventListener('load', init);
 
 var socket = io.connect();
 
-
-
 const difficulties = [
     "short",
     "medium",
     "long"
 ]
-socket.on('connection',()=> {
-
+socket.on('connect',(name)=> {
   console.log('socket on: ' + localStorage.getItem("name"));
-
-
 });
 
-socket.on('gameReady',(data)=> {
-
-  console.log(data);
+socket.on('gameReady', ()=> {
   console.log('gameReady received');
-
 });
 
 
