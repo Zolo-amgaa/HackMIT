@@ -14,6 +14,9 @@ const difficulties = [
 socket.on('connection',()=> {
   console.log('socket on');
 });
+socket.on('gameReady',()=> {
+  console.log('gameReady received');
+});
 
 
 let difficulty = difficulties[0];

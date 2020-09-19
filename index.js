@@ -2,8 +2,6 @@
 const express = require('express')
 const socket = require('socket.io')
 
-var players = [];
-var numberOfPlayers = 0;
 
 //App Setup
 const app = express()
@@ -16,21 +14,22 @@ var server = app.listen(port, () => {
 //Static Files
 app.use(express.static('./website'));
 
-//player check
+//Player Management
+var players = [];
+var numberOfPlayers = 0;
+
+var waitTime = 15;
+const waitInterval = 15;
+setInterval(countDown, 1000);
 
 
 //Socket Setup
 var io = socket(server);
 
+
 io.on('connection', function(socket){
-  if(numberOfPlayers < 4) {
-    socket.emit('gameReady', false);
-  }
-  else {
-    socket.emit('gameReady', true);
-  }
-  console.log('Connection made for id: ',socket.id);
-  let i;
+
+  let i=0;
   for(i = 0; i<players.length;i++) {
       if(players[i].id == socket.id) {
         break;
@@ -38,12 +37,28 @@ io.on('connection', function(socket){
 
   }
   if(i == players.length) {
-      let newPlayer = new Object();
-      newPlayer.id = socket.id;
-      newPlayer.wpm = 0;
+      let newPlayer = new Player(socket.id);
       players.push(newPlayer);
       numberOfPlayers++;
   }
+
+  console.log("Player joined with id: " + socket.id +"\nNumber of players: " + numberOfPlayers);
+
+  waitTime = waitInterval;
+
+  if (numberOfPlayers < 2)
+  {
+    socket.emit('gameReady', false);
+  }
+  else if (numberOfPlayers == 10)
+  {
+    socket.emit('gameReady', true);
+  } else if(waitTime <= 0 && numberOfPlayers >= 2)
+  {
+    socket.emit('gameReady', true);
+  }
+
+
 
 
   socket.on('disconnect', () => {
@@ -60,3 +75,9 @@ io.on('connection', function(socket){
     console.log(players);
   })
 });
+
+function countDown()
+{
+  waitTime--;
+  console.log("Wait Time: " + waitTime);
+}
