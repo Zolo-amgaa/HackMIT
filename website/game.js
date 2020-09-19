@@ -22,6 +22,7 @@ let wpm = 0;
 let time = 0;
 let score = 0;
 let isPlaying;
+let countDown = 30; 
 
 // DOM Elements
 const wordInput = document.querySelector('#word-input');
@@ -121,9 +122,10 @@ function showWord() {
 
 // Countdown timer
 function countup() {
+  countDown--; 
   time++;
   // Show time
-  timeDisplay.innerHTML = time;
+  timeDisplay.innerHTML = countDown;
   console.log(wpm);
 }
 
