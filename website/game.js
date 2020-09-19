@@ -124,6 +124,7 @@ function showWord() {
 // Countdown timer
 function countup() {
   countDown--;
+<<<<<<< HEAD
   if (countDown == 0) {
     countDown = 30;
   }
@@ -133,6 +134,8 @@ function countup() {
   else {
     document.getElementById("time").style.color = "white";
   }
+=======
+>>>>>>> 9b0c734d7a77d430ccdac92ee735503c4c9a4cda
   time++;
   // Show time
   timeDisplay.innerHTML = countDown;
