@@ -10257,7 +10257,10 @@ body {
   height: auto;
   min-height: 35rem;
   padding: 15rem 0;
+<<<<<<< HEAD
   background: grey;
+=======
+>>>>>>> ecadf2c206d7930c555fe8b4d1517a2370c4aaa2
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
