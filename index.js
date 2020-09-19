@@ -13,7 +13,6 @@ var server = app.listen(port, () => {
 //Static Files
 app.use(express.static('./website'));
 
-
 //Player Management
 var players = [];
 var numberOfPlayers = 0;
@@ -37,12 +36,9 @@ io.on('connection', function(socket){
 
   }
   if(i == players.length) {
-    //Initialize new player
-      let newPlayer = new Object();
-      newPlayer.id = socket.id;
-      newPlayer.wpm = 0;
-      newPlayer.rank = 0;
-      newPlayer.name = "";
+    newPlayer = new Object(); 
+    newPlayer.id = socket.id; 
+    newPlayer.wpm = 0; 
       players.push(newPlayer);
       numberOfPlayers++;
   }
