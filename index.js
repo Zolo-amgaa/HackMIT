@@ -37,9 +37,12 @@ io.on('connection', function(socket){
 
   }
   if(i == players.length) {
+    //Initialize new player
       let newPlayer = new Object();
       newPlayer.id = socket.id;
       newPlayer.wpm = 0;
+      newPlayer.rank = 0;
+      newPlayer.name = "";
       players.push(newPlayer);
       numberOfPlayers++;
   }
