@@ -15,7 +15,7 @@ async function fetchWordString() {
 (async function(){
   //Fetch list of words
   var wordString = await fetchWordString()
-  var wordList = wordString.split('\n')
+  var wordList = wordString.split('\r\n')
 
   //Split list of words into 3 tiers
   //console.log(wordList[0])
@@ -24,17 +24,24 @@ async function fetchWordString() {
   var wordListGamma = new Array();
 
   for (i = 0; i < wordList.length; i++) {
-    if(wordList[i].length<5) { 
+    if(wordList[i].length<4) { 
       wordListAlpha.push(wordList[i]) //1-3 letter words
-    }else if(wordList[i].length<9) { 
+    }else if(wordList[i].length<8) { 
       wordListBeta.push(wordList[i]) //4-7 letter words
     }else { 
       wordListGamma.push(wordList[i]) //7+ letter words
     }
   }
 
-  console.log('Alpha', wordListAlpha[0]);
+  console.log('Alpha', wordListAlpha, '\n');
   console.log('Beta', wordListBeta[0]);
   console.log('Gamma', wordListGamma[0]);
+
+  
+  //exports.wordListAlpha = wordListAlpha;
+  //exports.wordListBeta = wordListBeta;
+  //console.log(module)
+  //export const wordListBeta;
+  //export const wordListGamma;
 
 })()
