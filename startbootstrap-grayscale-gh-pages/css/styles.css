@@ -59,7 +59,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
 
-/* body {
+body {
   margin: 0;
   font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
@@ -68,7 +68,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   color: #212529;
   text-align: left;
   background-color: #fff;
-} */
+}
 
 body {
     background: #ecf3f3;
@@ -10257,6 +10257,10 @@ body {
   height: auto;
   min-height: 35rem;
   padding: 15rem 0;
+<<<<<<< HEAD
+  background: grey;
+=======
+>>>>>>> ecadf2c206d7930c555fe8b4d1517a2370c4aaa2
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
