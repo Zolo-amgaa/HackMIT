@@ -6,6 +6,9 @@ body {
 header {
   text-align: center;
 }
+.work-please {
+  margin-right: 90px;
+}
 
 .back {
   display: block;
@@ -16,4 +19,17 @@ header {
   display: block;
   background-color: #132743;
   left: 10px;
+}
+
+.container {
+  margin-right: 90px;
+}
+
+.leaderboard-div {
+  color: black;
+  margin-right: 20px;
+}
+
+.card {
+  color: #132743;
 }
