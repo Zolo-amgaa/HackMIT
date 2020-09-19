@@ -1,6 +1,7 @@
 window.addEventListener('load', init);
 
 // Globals
+let difficulty;
 
 var socket = io.connect();
 
@@ -18,8 +19,12 @@ socket.on('gameReady', ()=> {
   startGame();
 });
 
+socket.on('sendDifficulty', (data) => {
+  difficulty = data; 
+})
 
-let difficulty = difficulties[0];
+
+
 let wpm = 0;
 let time = 0;
 let score = 0;
