@@ -2,6 +2,7 @@ $(document).ready(function(){
 
   $('#join-button').on('click',function()
   {
-    alert('joined game');
+    alert($('#text-field').innerHTML.text);
+    console.log($('#text-field').innerHTML.text);
   });
 });
