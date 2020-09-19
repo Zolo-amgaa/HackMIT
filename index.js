@@ -17,6 +17,8 @@ app.use(express.static('./website'));
 var players = [];
 var numberOfPlayers = 0;
 
+//Time Management
+var time = 0;
 
 
 //Socket Setup
@@ -35,7 +37,6 @@ io.on('connection', function(socket){
     newPlayer.id = socket.id;
     newPlayer.wpm = 0;
     newPlayer.rank = 0;
-    newPlayer.level
     newPlayer.name = ""
     players.push(newPlayer);
     numberOfPlayers++;
@@ -48,11 +49,24 @@ io.on('connection', function(socket){
   if (numberOfPlayers == 4)
   {
     io.emit('gameReady');
+    time=0;
+    setInterval(countup,1000)
   }
 
 
   socket.on('disconnect', () => {
+    newPlayers = [];
+    for (let k = 0; k < players.length; k++)
+    {
+        if (players[k] != null)
+        {
+          newPlayers.add(players[k]);
+        } else
+         {continue;}
+    }
+    players = newPlayers;
     numberOfPlayers--;
+
     console.log('USER DISCONNECTED');
   });
 
@@ -69,13 +83,14 @@ function calculateLevels()
 {
   if (players.length == 2)
   {
-    io.emit("sendDifficulty", "medium");
+    io.to(players[0]).emit("sendDifficulty", {difficulty: "medium",rank: players[0].rank});
+    io.to(players[1]).emit("sendDifficulty", {difficulty: "medium",rank: players[1].rank});
   }
   if (players.length == 3)
   {
-    io.to(players[0].id).emit("sendDifficulty", "long")
-    io.to(players[1].id).emit("sendDifficulty", "medium")
-    io.to(players[2].id).emit("sendDifficulty", "short")
+    io.to(players[0].id).emit("sendDifficulty", {difficulty: "long",rank: players[0].rank})
+    io.to(players[1].id).emit("sendDifficulty", {difficulty: "medium",rank: players[1].rank})
+    io.to(players[2].id).emit("sendDifficulty", {difficulty: "short",rank: players[2].rank})
   }
 
   for (let j = 0; j < players.length;j++)
@@ -91,7 +106,7 @@ function calculateLevels()
     else
       difficulty = "short";
 
-      io.to(players[j].id).emit("sendDifficulty", difficulty)
+      io.to(players[j].id).emit("sendDifficulty", {difficulty: difficulty, rank:players[j].rank})
   }
 }
 
@@ -115,6 +130,32 @@ function selectionSort(){
   }
   calculateLevels();
 
+}
+
+function countup(){
+  if (time == 30) {
+    eliminateLowest();
+    time=0;
+  }
+  time++;
+
+  console.log("Array Size: " + players.length);
+  console.log(players);
+
+}
+
+//Removes the player with the lowest WPM from the game
+function eliminateLowest()
+{
+  selectionSort();
+
+  var name = players[numberOfPlayers-1].name;
+  var wpm = players[numberOfPlayers-1].wpm;
+  var id = players[numberOfPlayers-1].id;
+  delete players[numberOfPlayers-1];
+  numberOfPlayers--;
+  io.to(id).emit("end",  {name: name, wpm: wpm})
+  console.log("Eliminating " + name + "(" + id + ")");
 }
 
 setInterval(selectionSort, 1000);

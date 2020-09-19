@@ -2,7 +2,7 @@ window.addEventListener('load', init);
 
 // Globals
 let difficulty = 'medium';
-
+let rank = 0;
 
 var socket = io.connect();
 
@@ -21,11 +21,20 @@ socket.on('gameReady', ()=> {
 });
 
 socket.on('sendDifficulty', (data) => {
-  difficulty = data;
+  difficulty = data.difficulty;
+  rank = data.rank;
 
 })
 
+socket.on('end', (data)=> {
+  localStore.setItem("wpm", data.wpm);
+  localStore.setItem("name", data.name);
+  localStore.setItem("score", score);
+  localStore.setItem("rank", data.rank);
+  window.location.href = "gameover.html";
+  console.log ("DEAD");
 
+})
 
 let wpm = 0;
 let time = 0;
@@ -41,7 +50,7 @@ const timeDisplay = document.querySelector('#time');
 const message = document.querySelector('#message');
 const seconds = document.querySelector('#seconds');
 const wpmDisplay = document.querySelector("#wpm");
-const accuracyDisplay = document.querySelector("#accuracy");
+const rankDisplay = document.querySelector("#rank");
 
 
 const shortWords = [
@@ -74,12 +83,13 @@ function startGame() {
   // Start matching on word input
   wordInput.addEventListener('input', startMatch);
   // Call countdown every second
+  time = 0;
+
   setInterval(countup, 1000);
 
   //Check wpm
   setInterval(updateWpm, 1000);
 
-  time = 0;
 }
 
 // Start match
@@ -103,6 +113,7 @@ function startMatch() {
 function updateWpm() {
     wpm = Math.round((score/time)*60);
     wpmDisplay.innerHTML = wpm;
+    rankDisplay.innerHTML = rank + 1;
     socket.emit('wpm', wpm);
 
 }
@@ -142,6 +153,8 @@ function showWord() {
 function countup() {
   if (countDown == 0) {
     //eliminate someone
+    socket.emit()
+
     countDown = 30;
   }
   if (countDown <= 10) {
