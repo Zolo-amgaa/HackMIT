@@ -4,13 +4,13 @@ class Player {
 
   var id;
   var wpm;
-  var difficulty;
+  var diff;
 
   constructor (id)
   {
     this.id = id;
     wpm = 0;
-    difficulty = 0;
+    diff = 0;
   }
 
 }
