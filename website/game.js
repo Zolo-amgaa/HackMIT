@@ -33,14 +33,14 @@ socket.on('sendDifficulty', (data) => {
 })
 
 socket.on('end', (data)=> {
-  localStore.setItem("wpm", data.wpm);
-  localStore.setItem("name", data.name);
-  localStore.setItem("score", score);
-  localStore.setItem("rank", data.rank);
 
-  window.location.href = "gameover.html";
-  console.log ("DEAD");
-
+  //Displays Game Over screem
+  wordInput.style.display = "none";
+  currentWord.innerHTML = "Game Over";
+  message.style.display= "none";
+  seconds.innerHTML = time;
+  wpmDisplay.innerHTML = wmp;
+  rankDisplay.innerHTML = rank;
 })
 
 let wpm = 0;
@@ -83,7 +83,6 @@ function startGame() {
   // Load word from array
   showWord();
 
-  //showWord();
   // Start matching on word input
   wordInput.addEventListener('input', startMatch);
   // Call countdown every second
