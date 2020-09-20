@@ -23,7 +23,8 @@ socket.on('connect',()=> {
 
 socket.on('gameReady', ()=> {
   console.log('gameReady received');
-  startGame();
+
+  countdown();
 });
 
 socket.on('sendDifficulty', (data) => {
@@ -52,9 +53,9 @@ socket.on('end', (data)=> {
 socket.on('leaderboard', (players)=> {
   players = players;
   firstRank.innerHTML = "1. " + players[0].name;
-  secondRank.innerHTML = "2. " +players[1].name;
-  thirdRank.innerHTML = "3. " +players[2].name;
-  fourthRank.innerHTML =  "4. " +players[3].name;
+  secondRank.innerHTML = "2. " + players[1].name;
+  thirdRank.innerHTML = "3. " + players[2].name;
+  fourthRank.innerHTML =  "4. " + players[3].name;
 })
 
 let wpm = 0;
@@ -113,6 +114,17 @@ function startGame() {
   //Check wpm
   setInterval(updateWpm, 1000);
 
+}
+function countdown()
+{
+    currentWord.innerHTML = "3        ";
+    window.setTimeout(function(){
+      currentWord.innerHTML = "    2    ";
+      window.setTimeout(function(){
+        currentWord.innerHTML = "        1";
+        startGame();
+      },1000);
+    },1000);
 }
 
 // Start match
