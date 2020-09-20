@@ -19,6 +19,8 @@ socket.on('connect',()=> {
   this.name = localStorage.getItem("name");
   console.log('socket on: ' + localStorage.getItem("name"));
   socket.emit('sendName', (this.name));
+  wpmDisplay.innerHTML = "-";
+  rankDisplay.innerHTML = "-";
 });
 
 socket.on('gameReady', ()=> {
@@ -47,9 +49,9 @@ socket.on('end', (data)=> {
   //Displays Game Over screem
   wordInput.style.display = "none";
   message.style.display= "none";
-  seconds.innerHTML = finalTime;
-  wpmDisplay.innerHTML = finalWmp;
-  rankDisplay.innerHTML = finalRank;
+  seconds.innerHTML = time;
+  wpmDisplay.innerHTML = wmp;
+  rankDisplay.innerHTML = rank;
 })
 
 socket.on('leaderboard', (players)=> {

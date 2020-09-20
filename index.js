@@ -193,8 +193,8 @@ function eliminateLowest() {
     //If last person alive !!
     if (players.length == 1) {
       io.to(players[0].id).emit("end", {
-        name: name,
-        wpm: wpm,
+        name: players[0].name,
+        wpm: players[0].wpm,
         win: true
       })
 
@@ -210,5 +210,3 @@ function eliminateLowest() {
     }
   }
 }
-
-setInterval(selectionSort, 1000);
