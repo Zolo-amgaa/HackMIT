@@ -25,12 +25,10 @@
     <div class="container d-flex h-100 align-items-center">
       <div class="mx-auto text-center">
         <h1 class="text-white-50 mx-auto my-0text-uppercase fade-in glow">TypeOff</h1>
-        <h4 class="text-white-50 mx-auto mt-2 mb-5 fade-in">Type the word that appears at the top of your screen. </h4>
-        <h4 class="text-white-50 mx-auto mt-2 mb-5 fade-in">Every 30 seconds the slowest typist is eliminated.</h4>
-        <h2 class="text-white-50 mx-auto mt-2 mb-5 fade-in">Enter Username:</h2>
-        <input type="text" class="fade-in" id="text-field" name="fname"><br><br>
+        <h2 class="text-white-50 mx-auto mt-2 mb-5 fade-in">Type as fast as you can. Slowest eliminated every 30 seconds.</h2>
+        <input type="text" class="fade-in" id="text-field" name="fname" placeholder="Enter Username"><br><br>
 
-        <a id="join-button" class="btn btn-primary js-scroll-trigger fade-in" href="game.html">Join</a>
+        <a id="join-button" class="btn btn-secondary btn-lg js-scroll-trigger fade-in" href="game.html">Join</a>
       </div>
     </div>
   </header>
@@ -43,6 +41,40 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
   <!-- Add Button listener-->
   <script src="js/join.js"></script>
+
+
+
+
+  ethan, [Sep 19, 2020 at 8:15:34 PM]:
+  <!-- Generate Falling Letters-->
+  <script>
+    (async function() {
+      //Set acceptable letters
+      var validLetters = ["T", "Y", "P", "E", "D", "R", "O", "P"]
+
+      function generateVibe() {
+        //Choose a letter
+        let selected_letter = Math.floor(Math.random() * validLetters.length);
+        //Create div
+        let letter = document.createElement("div");
+        letter.className = "vibe";
+        //Create text for div
+        let text = document.createTextNode(validLetters[selected_letter]);
+        letter.appendChild(text);
+        //Add to page
+        document.body.appendChild(letter);
+        //Set position
+        let left_pos = Math.floor((Math.random() * 95) + 4);
+        let top_pos = Math.floor((Math.random() * 100) + 1);
+        letter.style.left = "" + left_pos + "%";
+        letter.style.top = "" + top_pos + "px";
+      }
+
+      //Stagger delivery of letters
+      setInterval(generateVibe, 120);
+
+    })()
+  </script>
 </body>
 
 </html>
