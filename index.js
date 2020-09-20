@@ -20,7 +20,8 @@ var queueOfPlayers = [];
 var numberOfPlayers = 0;
 
 //Time Management
-var time = 0;
+var time = 33;
+var elapsed = 0;
 
 //Socket Setup
 var io = socket(server);
@@ -42,8 +43,16 @@ io.on('connection', function(socket) {
   console.log("Player joined with id: " + socket.id + "\nNumber of players in queue: " + queueOfPlayers.length);
 
   //waitTime = waitInterval;
+  socket.on('sendName', (name) => {
+    for (let p = 0; p < queueOfPlayers.length; p++) {
+      if (socket.id == queueOfPlayers[p].id) {
+        queueOfPlayers[p].name = name;
+      }
+    }
+  })
 
-  if (queueOfPlayers.length >= 4) {
+
+  if (queueOfPlayers.length >= 4 && !inGame) {
     for(var i = 0; i<4; i++) {
       players[i] = queueOfPlayers.shift();
     }
@@ -52,29 +61,30 @@ io.on('connection', function(socket) {
       io.to(players[i].id).emit('gameReady');
     }
     inGame = true;
-    time = 0;
-    setInterval(countup, 1000)
+    time = 33;
+    setInterval(changeTime, 1000)
   }
 
-  socket.on('sendName', (name) => {
-    for (let p = 0; p < players.length; p++) {
-      if (socket.id == players[p].id) {
-        players[p].name = name;
-      }
-    }
-  })
+
 
   socket.on('disconnect', () => {
-    newPlayers = [];
 
-    for (let k = 0; k < players.length; k++) {
-      if (players[k] != null) {
-        newPlayers.push(players[k]);
-      } else {
-        continue;
+    for (var i = 0; i < players.length; i++)
+    {
+      if (socket.id == players[i].id)
+      {
+        players.splice(i, 1);
       }
     }
-    players = newPlayers;
+
+    for (var i = 0; i < queueOfPlayers.length; i++)
+    {
+      if (socket.id == queueOfPlayers[i].id)
+      {
+        queueOfPlayers.splice(i, 1);
+      }
+    }
+
     console.log('USER DISCONNECTED');
   });
 
@@ -154,14 +164,19 @@ function selectionSort() {
   io.emit('leaderboard', players)
 }
 
-function countup() {
-  if (time == 30) {
+function changeTime() {
+  if (time <= 0) {
     eliminateLowest();
-    time = 0;
+    time = 30;
   }
-  time++;
+  time--;
+  elapsed++;
 
-  console.log("Array Size: " + players.length);
+  for(var i = 0; i<players.length; i++) {
+    io.to(players[i].id).emit('time', {time:time, elapsed:elapsed});
+  }
+
+  console.log("Array Size: " + players.length + "\nQueue Size: " + queueOfPlayers.length);
   console.log(players);
 
 }
@@ -171,18 +186,18 @@ function eliminateLowest() {
   if (inGame) {
 
     selectionSort();
-    newPlayers = [];
 
-    for (let k = 0; k < players.length; k++) {
-      if (players[k] != null) {
-        newPlayers.push(players[k]);
-      } else {
-        continue;
-      }
+    if(players.length =1)
+    {
+      io.to(players[0].id).emit("end", {
+        name: players[0].name,
+        wpm: players[0].wpm,
+        win: true
+      });
+      inGame=false;
+      endGame();
+      checkReset();
     }
-    players = newPlayers;
-
-
     if (players.length == 2)
     {
       io.to(players[0].id).emit("end", {
@@ -198,33 +213,50 @@ function eliminateLowest() {
 
       console.log("Eliminating " + name + "(" + id + ")");
       inGame=false;
+      endGame();
+      checkReset();
+    }
+    else{
+      var name = players[players.length - 1].name;
+      var wpm = players[players.length - 1].wpm;
+      var id = players[players.length - 1].id;
+
+      //removes last person
+      players.splice(players.length - 1, 1);
+
+
+        io.to(id).emit("end", {
+          name: name,
+          wpm: wpm,
+          win: false
+        });
+        console.log("Eliminating " + name + "(" + id + ")");
+      }
     }
     //collects information of the person being eliminated
-    var name = players[players.length - 1].name;
-    var wpm = players[players.length - 1].wpm;
-    var id = players[players.length - 1].id;
 
-    //removes last person
-    players.splice(players.length - 1, 1);
+  }
 
-
-    //if last person alive !!
-    if (players.length == 1) {
-      io.to(players[0].id).emit("end", {
-        name: players[0].name,
-        wpm: players[0].wpm,
-        win: true
-      })
-
-      //END OF Game
-      inGame = false;
-    } else{
-      io.to(id).emit("end", {
-        name: name,
-        wpm: wpm,
-        win: false
-      });
-      console.log("Eliminating " + name + "(" + id + ")");
+function endGame()
+{
+  elapsed=0;
+  time=33;
+  players = [];
+  console.log("GAME ENDED");
+}
+function checkReset()
+{
+  if (queueOfPlayers.length >= 4)
+  {
+    for(var i = 0; i<4; i++) {
+      players[i] = queueOfPlayers.shift();
     }
+    for(var i = 0; i<4; i++) {
+      console.log(players[i].id)
+      io.to(players[i].id).emit('gameReady');
+    }
+    inGame = true;
+    time = 33;
+    setInterval(changeTime, 1000)
   }
 }

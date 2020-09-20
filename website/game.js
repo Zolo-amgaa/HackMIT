@@ -8,7 +8,6 @@ let rank = 0;
 var players;
 
 //interval variables
-var countup;
 var updatewpm;
 
 //socket
@@ -39,6 +38,20 @@ socket.on('sendDifficulty', (data) => {
   rank = data.rank;
 
 })
+// Countdown timer
+socket.on('time', (data) =>{
+
+  if (data.time <= 10) {
+    document.getElementById("time").style.color = "red";
+  }
+  else {
+    document.getElementById("time").style.color = "white";
+  }
+  // Show time
+  timeDisplay.innerHTML = data.time;
+  elapsed = data.elapsed;
+  //console.log("WPM: " + wpm + "Score: " + score + "\nTime: " + time);
+})
 
 socket.on('end', (data)=> {
 
@@ -48,7 +61,6 @@ socket.on('end', (data)=> {
   } else {
     currentWord.innerHTML = "You Win, " + data.name + "!";
   }
-  clearInterval(countup);
   clearInterval(updatewpm);
 
   //Displays Game Over screem
@@ -57,10 +69,12 @@ socket.on('end', (data)=> {
   seconds.innerHTML = time;
   wpmDisplay.innerHTML = wmp;
   rankDisplay.innerHTML = rank + 1;
+
+  socket.disconnect();
 })
 
 socket.on('leaderboard', (players)=> {
-  players = players;
+  this.players = players;
   firstRank.innerHTML = "1. " + players[0].name;
   secondRank.innerHTML = "2. " + players[1].name;
   thirdRank.innerHTML = "3. " + players[2].name;
@@ -68,7 +82,7 @@ socket.on('leaderboard', (players)=> {
 })
 
 let wpm = 0;
-let time = 0;
+let elapsed = 0;
 let score = 0;
 let isPlaying;
 let countDown = 30;
@@ -91,7 +105,7 @@ const fourthRank = document.querySelector('#fourth');
 
 
 var shortWords = [
-  'abe','aby','ace','act','add','ado','aft','aga','age','ago','ah','aha','aid','ail','aim','air','ala','alb','ale','all','alp','alt','am','amp','an','ana','and','ant','any','ape','apt','arc','are','ark','arm','art','as','ash','ask','asp','at','ate','auk','ave','awe','awn','axe','aye','baa','bad','bag','bah','ban','bap','bar','bat','bay','be','bed','bee','beg','bel','ben','bet','bib','bid','big','bin','bit','biz','boa','bob','bog','boo','bop','bow','box','boy','bra','bub','bud','bug','bum','bun','bur','bus','but','buy','by','bye','cab','cad','cam','can','cap','car','cat','caw','cob','cod','cog','col','con','coo','cop','cor','cot','cow','cox','coy','cry','cub','cud','cue','cup','cur','cut','dab','dad','dam','dan','day','deb','dee','den','dew','did','die','dig','dim','din','dip','do','doc','doe','dog','doh','don','dor','dot','dr','dry','dub','dud','due','dug','dun','duo','dux','dye','ear','eat','ebb','eel','eg','egg','ego','eh','eke','elf','elk','ell','elm','els','em','ems','emu','end','eon','era','ere','erg','err','est','eta','eve','ewe','ext','eye','fab','fad','fan','far','fat','fax','fed','fee','fen','few','fez','fib','fig','fin','fir','fit','fix','fly','fob','foe','fog','fop','for','fox','fro','fry','fug','fun','fur','gab','gad','gag','gal','gap','gas','gay','gel','gem','gen','get','gig','gin','gnu','go','god','goo','got','gum','gun','gut','guy','gym','ha','had','hag','ham','has','hat','hay','he','hem','hen','her','hew','hex','hey','hi','hic','hid','him','hip','his','hit','hmm','ho','hob','hod','hoe','hog','hop','hot','how','hub','hue','hug','huh','hum','hut','ice','icy','id','ids','if','ifs','ilk','ill','im','imp','in','ink','inn','ins','ion','ire','irk','is','it','its','ive','ivy','jab','jag','jam','jap','jar','jaw','jay','jet','jew','job','jog','jot','joy','jug','jut','keg','ken','key','kid','kin','kit','lab','lad','lag','lam','lap','las','law','lax','lay','lea','led','lee','leg','let','lid','lie','lip','lit','lls','lob','log','loo','lop','lot','low','lug','lur','lux','lye','mac','mad','mag','man','map','mar','mas','mat','maw','may','me','men','met','mew','mid','mix','mob','mod','mom','moo','mop','mow','mr','mrs','ms','mu','mud','mug','mum','my','nab','nag','nap','nay','ne','nee','net','new','nib','nil','nip','nit','no','nod','non','nor','not','now','nu','nun','nut','oaf','oak','oar','oat','odd','ode','of','off','oft','oh','ohm','oil','ok','old','ole','olm','on','one','ooh','opt','or','orb','ore','our','out','ova','ow','owe','owl','own','ox','pa','pad','pal','pan','pap','par','pat','paw','pay','pea','peg','pen','pep','per','pet','pew','pi','pie','pig','pin','pip','pit','ply','pod','pop','pot','pox','pre','pro','pry','pub','pug','pun','pup','pus','put','qua','rad','rag','raj','ram','ran','rap','rat','raw','ray','re','red','ref','rem','rep','rev','rho','ria','rib','rid','rig','rim','rip','rob','roc','rod','roe','rom','roo','rot','row','rub','rue','rug','rum','run','rut','rye','sac','sad','sag','sam','san','sap','sat','saw','say','sea','sec','see','sen','set','sew','sex','she','shy','sic','sin','sip','sir','sis','sit','six','ski','sky','sly','so','sob','sod','soh','son','sop','sos','sot','sow','soy','spa','spy','sty','sub','sud','sue','sum','sun','sup','tab','tag','tan','tap','tar','tat','tau','tax','tea','ted','tee','ten','the','thy','tic','tie','tin','tip','tit','to','toe','tog','ton','too','top','tot','tow','toy','try','tub','tug','tun','two','ufo','uke','up','ups','urn','us','use','van','vat','veg','vet','vex','via','vie','vim','vow','wad','wag','wan','war','was','wax','way','we','web','wed','wee','wet','who','why','wig','win','wit','woe','wok','won','woo','wow','wry','yak','yam','yap','yaw','ye','yea','yen','yep','yes','yet','yew','yip','yon','you','yrs','zag','zap','zig','zip','zoo',
+  'abe','aby','ace','act','add','ado','aft','aga','age','ago','ah','aha','aid','ail','aim','air','ala','alb','ale','all','alp','alt','am','amp','an','ana','and','ant','any','ape','apt','arc','are','ark','arm','art','as','ash','ask','asp','at','ate','auk','ave','awe','awn','axe','aye','baa','bad','bag','bah','ban','bap','bar','bat','bay','be','bed','bee','beg','bel','ben','bet','bib','bid','big','bin','bit','biz','boa','bob','bog','boo','bop','bow','box','boy','bra','bub','bud','bug','bum','bun','bur','bus','but','buy','by','bye','cab','cad','cam','can','cap','car','cat','caw','cob','cod','cog','col','con','coo','cop','cor','cot','cow','cox','coy','cry','cub','cud','cue','cup','cur','cut','dab','dad','dam','dan','day','deb','dee','den','dew','did','die','dig','dim','din','dip','do','doc','doe','dog','doh','don','dor','dot','dr','dry','dub','dud','due','dug','dun','duo','dux','dye','ear','eat','ebb','eel','eg','egg','ego','eh','eke','elf','elk','ell','elm','els','em','ems','emu','end','eon','era','ere','erg','err','est','eta','eve','ewe','ext','eye','fab','fad','fan','far','fat','fax','fed','fee','fen','few','fez','fib','fig','fin','fir','fit','fix','fly','fob','foe','fog','fop','for','fox','fro','fry','fug','fun','fur','gab','gad','gag','gal','gap','gas','gay','gel','gem','gen','get','gig','gin','gnu','go','god','goo','got','gum','gun','gut','guy','gym','ha','had','hag','ham','has','hat','hay','he','hem','hen','her','hew','hex','hey','hi','hic','hid','him','hip','his','hit','hmm','ho','hob','hod','hoe','hog','hop','hot','how','hub','hue','hug','huh','hum','hut','ice','icy','id','ids','if','ifs','ilk','ill','im','imp','in','ink','inn','ins','ion','ire','irk','is','it','its','ive','ivy','jab','jag','jam','jap','jar','jaw','jay','jet','jew','job','jog','jot','joy','jug','jut','keg','ken','key','kid','kin','kit','lab','lad','lag','lam','lap','las','law','lax','lay','lea','led','lee','leg','let','lid','lie','lip','lit','lls','lob','log','loo','lop','lot','low','lug','lur','lux','lye','mac','mad','mag','man','map','mar','mas','mat','maw','may','me','men','met','mew','mid','mix','mob','mod','mom','moo','mop','mow','mr','mrs','ms','mu','mud','mug','mum','my','nab','nag','nap','nay','ne','nee','net','new','nib','nil','nip','nit','no','nod','non','nor','not','now','nu','nun','nut','oaf','oak','oar','oat','odd','ode','of','off','oft','oh','ohm','oil','ok','old','ole','olm','on','one','ooh','opt','or','orb','ore','our','out','ova','ow','owe','owl','own','ox','pa','pad','pal','pan','pap','par','pat','paw','pay','pea','peg','pen','pep','per','pet','pew','pi','pie','pig','pin','pip','pit','ply','pod','pop','pot','pox','pre','pro','pry','pub','pug','pun','pup','pus','put','qua','rad','rag','raj','ram','ran','rap','rat','raw','ray','re','red','ref','rem','rep','rev','rho','ria','rib','rid','rig','rim','rip','rob','roc','rod','roe','rom','roo','rot','row','rub','rue','rug','rum','run','rut','rye','sac','sad','sag','sam','san','sap','sat','saw','say','sea','sec','see','sen','set','sew','sex','she','shy','sic','sin','sip','sir','sis','sit','six','ski','sky','sly','so','sob','sod','soh','son','sop','sos','sot','sow','soy','spa','spy','sty','sub','sud','sue','sum','sun','sup','tab','tag','tan','tap','tar','tat','tau','tax','tea','ted','tee','ten','the','thy','tic','tie','tin','tip','to','toe','tog','ton','too','top','tot','tow','toy','try','tub','tug','tun','two','ufo','uke','up','ups','urn','us','use','van','vat','veg','vet','vex','via','vie','vim','vow','wad','wag','wan','war','was','wax','way','we','web','wed','wee','wet','who','why','wig','win','wit','woe','wok','won','woo','wow','wry','yak','yam','yap','yaw','ye','yea','yen','yep','yes','yet','yew','yip','yon','you','yrs','zag','zap','zig','zip','zoo',
 ];
 
 var mediumWords = [
@@ -116,10 +130,7 @@ function startGame() {
   // Start matching on word input
   wordInput.addEventListener('input', startMatch);
   // Call countdown every second
-  time = 0;
 
-  countup = setInterval(countup, 1000);
-  //Check wpm
   updatewmp = setInterval(updateWpm, 1000);
 }
 function countdown()
@@ -153,7 +164,7 @@ function startMatch() {
 }
 
 function updateWpm() {
-    wpm = Math.round((score/time)*60);
+    wpm = Math.round((score/elapsed)*60);
     wpmDisplay.innerHTML = wpm;
     rankDisplay.innerHTML = rank + 1;
     socket.emit('wpm', wpm);
@@ -190,25 +201,4 @@ function showWord() {
   const randIndex = Math.floor(Math.random() * words.length);
   // Output random word
   currentWord.innerHTML = words[randIndex];
-}
-
-// Countdown timer
-function countup() {
-  if (countDown == 0) {
-    //eliminate someone
-    socket.emit()
-
-    countDown = 30;
-  }
-  if (countDown <= 10) {
-    document.getElementById("time").style.color = "red";
-  }
-  else {
-    document.getElementById("time").style.color = "white";
-  }
-  countDown--;
-  time++;
-  // Show time
-  timeDisplay.innerHTML = countDown;
-  //console.log("WPM: " + wpm + "Score: " + score + "\nTime: " + time);
 }
