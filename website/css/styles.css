@@ -11101,7 +11101,7 @@ body {
 
 @keyframes fall {
   to {
-    top: 80%;
+    top: 90%;
     opacity: 0%
   }
 }
