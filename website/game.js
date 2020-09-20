@@ -5,7 +5,6 @@ window.addEventListener('load', init);
 // Globals
 let difficulty = 'medium';
 let rank = 0;
-
 var players;
 
 //interval variables
@@ -24,6 +23,7 @@ socket.on('connect',()=> {
   this.name = localStorage.getItem("name");
   console.log('socket on: ' + localStorage.getItem("name"));
   socket.emit('sendName', (this.name));
+  timeDisplay.innerHTML = "-";
   wpmDisplay.innerHTML = "-";
   rankDisplay.innerHTML = "-";
 });

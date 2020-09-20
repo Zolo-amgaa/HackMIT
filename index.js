@@ -16,7 +16,7 @@ app.use(express.static('./website'));
 //Player Management
 var inGame = false;
 var players = [];
-var queueOfPlayers = []; 
+var queueOfPlayers = [];
 var numberOfPlayers = 0;
 
 //Time Management
@@ -28,13 +28,13 @@ var io = socket(server);
 io.on('connection', function(socket) {
 
   if(inGame || queueOfPlayers.length < 4) {
-    newPlayer = new Object(); 
+    newPlayer = new Object();
     newPlayer.id = socket.id;
     newPlayer.wpm = 0;
     newPlayer.rank = 0;
     newPlayer.name = ""
     queueOfPlayers.push(newPlayer);
-    //add person to queue 
+    //add person to queue
   }
   else {
 
@@ -45,11 +45,11 @@ io.on('connection', function(socket) {
 
   if (queueOfPlayers.length >= 4) {
     for(var i = 0; i<4; i++) {
-      players[i] = queueOfPlayers.shift(); 
+      players[i] = queueOfPlayers.shift();
     }
     for(var i = 0; i<4; i++) {
       console.log(players[i].id)
-      io.to(players[i].id).emit('gameReady'); 
+      io.to(players[i].id).emit('gameReady');
     }
     inGame = true;
     time = 0;
