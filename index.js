@@ -168,6 +168,7 @@ function countup() {
 //Removes the player with the lowest WPM from the game
 function eliminateLowest() {
   if (inGame) {
+
     selectionSort();
 
     newPlayers = [];
@@ -186,19 +187,19 @@ function eliminateLowest() {
     var id = players[players.length - 1].id;
 
     numberOfPlayers--;
+
     players.splice(players.length - 1, 1);
 
     //If last person alive !!
     if (players.length == 1) {
-      io.to(id).emit("end", {
+      io.to(players[0].id).emit("end", {
         name: name,
         wpm: wpm,
         win: true
       })
 
-//END OF Game
-inGame = false;
-
+      //END OF Game
+      inGame = false;
     } else{
       io.to(id).emit("end", {
         name: name,
