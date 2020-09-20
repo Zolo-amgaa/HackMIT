@@ -16,6 +16,7 @@ app.use(express.static('./website'));
 //Player Management
 var inGame = false;
 var players = [];
+var queueOfPlayers = []; 
 var numberOfPlayers = 0;
 
 //Time Management
@@ -26,28 +27,30 @@ var io = socket(server);
 
 io.on('connection', function(socket) {
 
-  let i = 0;
-  for (i = 0; i < players.length; i++) {
-    if (players[i].id == socket.id) {
-      break;
-    }
-  }
-  if (i == players.length) {
-    newPlayer = new Object();
+  if(inGame || queueOfPlayers.length < 4) {
+    newPlayer = new Object(); 
     newPlayer.id = socket.id;
     newPlayer.wpm = 0;
     newPlayer.rank = 0;
     newPlayer.name = ""
-    players.push(newPlayer);
-    numberOfPlayers++;
+    queueOfPlayers.push(newPlayer);
+    //add person to queue 
   }
+  else {
 
-  console.log("Player joined with id: " + socket.id + "\nNumber of players: " + numberOfPlayers);
+  }
+  console.log("Player joined with id: " + socket.id + "\nNumber of players in queue: " + queueOfPlayers.length);
 
   //waitTime = waitInterval;
 
-  if (numberOfPlayers == 4) {
-    io.emit('gameReady');
+  if (queueOfPlayers.length >= 4) {
+    for(var i = 0; i<4; i++) {
+      players[i] = queueOfPlayers.shift(); 
+    }
+    for(var i = 0; i<4; i++) {
+      console.log(players[i].id)
+      io.to(players[i].id).emit('gameReady'); 
+    }
     inGame = true;
     time = 0;
     setInterval(countup, 1000)
@@ -72,8 +75,6 @@ io.on('connection', function(socket) {
       }
     }
     players = newPlayers;
-    numberOfPlayers--;
-
     console.log('USER DISCONNECTED');
   });
 
@@ -88,11 +89,11 @@ io.on('connection', function(socket) {
 
 function calculateLevels() {
   if (players.length == 2) {
-    io.to(players[0]).emit("sendDifficulty", {
+    io.to(players[0].id).emit("sendDifficulty", {
       difficulty: "medium",
       rank: players[0].rank
     });
-    io.to(players[1]).emit("sendDifficulty", {
+    io.to(players[1].id).emit("sendDifficulty", {
       difficulty: "medium",
       rank: players[1].rank
     });
@@ -170,9 +171,6 @@ function eliminateLowest() {
   if (inGame) {
 
     selectionSort();
-
-
-
     newPlayers = [];
 
     for (let k = 0; k < players.length; k++) {
