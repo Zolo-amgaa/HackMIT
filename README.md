@@ -1,2 +1,6 @@
 # HackMIT
- our winning project for hack MIT
+- Type as fast as you can. Slowest eliminated every 30 seconds.
+- Play with 3 of your friends by visiting typedrop.heroku.com
+- Built with HTML5, CSS Bootstrap, Node.js, and JavaScript.
+
+made in 36 hours by Aidan Seeberg, Zolo Amgaabaatar, Sarat Sagaram, and Ethan Hood
