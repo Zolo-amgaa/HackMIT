@@ -8,6 +8,11 @@ let rank = 0;
 
 var players;
 
+//interval variables
+var countup;
+var updateWpm;
+
+//socket
 var socket = io.connect();
 
 const difficulties = [
@@ -51,7 +56,7 @@ socket.on('end', (data)=> {
   message.style.display= "none";
   seconds.innerHTML = time;
   wpmDisplay.innerHTML = wmp;
-  rankDisplay.innerHTML = rank;
+  rankDisplay.innerHTML = rank + 1;
 })
 
 socket.on('leaderboard', (players)=> {
@@ -113,9 +118,9 @@ function startGame() {
   // Call countdown every second
   time = 0;
 
-  setInterval(countup, 1000);
+  var countup = setInterval(countup, 1000);
   //Check wpm
-  setInterval(updateWpm, 1000);
+  var updateWmp = setInterval(updateWpm, 1000);
 }
 function countdown()
 {
