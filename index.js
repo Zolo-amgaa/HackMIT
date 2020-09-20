@@ -268,3 +268,11 @@ function checkReset() {
     changetime = setInterval(changeTime, 1000);
   }
 }
+function sendQueueCount(){
+  console.log("function");
+  for (let i = 0; i < queueOfPlayers.length;i++) {
+    io.to(queueOfPlayers[i].id).emit('queueCount',queueOfPlayers.length);
+  }
+}
+
+setInterval(sendQueueCount,5000);

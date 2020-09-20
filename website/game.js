@@ -6,7 +6,7 @@ window.addEventListener('load', init);
 let difficulty = 'medium';
 let rank = 0;
 var players;
-
+let inGame = false;
 //interval variables
 var updatewpm;
 
@@ -26,10 +26,13 @@ socket.on('connect',()=> {
   wpmDisplay.innerHTML = "-";
   rankDisplay.innerHTML = "-";
 });
-
+socket.on('queueCount', (count)=>{
+  if (!inGame) {
+    document.querySelector('#current-word').innerHTML = "Waiting ("+count+"/4)";
+  }
+})
 socket.on('gameReady', ()=> {
   console.log('gameReady received');
-
   countdown();
 });
 
@@ -69,6 +72,7 @@ socket.on('end', (data)=> {
   seconds.innerHTML = time;
   wpmDisplay.innerHTML = wmp;
   rankDisplay.innerHTML = rank + 1;
+  inGame = false;
 
   socket.disconnect();
 })
@@ -84,7 +88,6 @@ socket.on('leaderboard', (players)=> {
 let wpm = 0;
 let elapsed = 0;
 let score = 0;
-let isPlaying;
 let countDown = 30;
 
 // DOM Elements
@@ -135,6 +138,8 @@ function startGame() {
 }
 function countdown()
 {
+  inGame = true;
+
     currentWord.innerHTML = "3";
     window.setTimeout(function(){
       currentWord.innerHTML = "2";
