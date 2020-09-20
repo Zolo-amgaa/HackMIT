@@ -71,6 +71,31 @@ body {
   background-color: #132743;
 }
 
+.glow {
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 8s;
+}
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to{opacity: 1;}
+}
 
 .particle {
   position: absolute;
@@ -571,6 +596,8 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
+
+
 
 .container {
   width: 100%;
@@ -4830,10 +4857,16 @@ input[type=button].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #132743;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  margin-top: 1rem;
+
+}
+
+#leaderboard {
+  margin-top: 0px;
 }
 
 .card>hr {
