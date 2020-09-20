@@ -34,13 +34,19 @@ socket.on('sendDifficulty', (data) => {
 
 socket.on('end', (data)=> {
 
+  if (!data.win)
+  {
+    currentWord.innerHTML = "Game Over, " + data.name + "!";
+  } else {
+    currentWord.innerHTML = "You Win, " + data.name + "!";
+  }
+
   //Displays Game Over screem
   wordInput.style.display = "none";
-  currentWord.innerHTML = "Game Over";
   message.style.display= "none";
-  seconds.innerHTML = time;
-  wpmDisplay.innerHTML = wmp;
-  rankDisplay.innerHTML = rank;
+  seconds.innerHTML = time.valueOf();
+  wpmDisplay.innerHTML = data.wmp.valueOf();
+  rankDisplay.innerHTML = rank.valueOf();
 })
 
 socket.on('leaderboard', (players)=> {
