@@ -41,13 +41,15 @@ socket.on('end', (data)=> {
   } else {
     currentWord.innerHTML = "You Win, " + data.name + "!";
   }
+  clearInterval(countUp);
+  clearInterval(updateWpm);
 
   //Displays Game Over screem
   wordInput.style.display = "none";
   message.style.display= "none";
-  seconds.innerHTML = time.valueOf();
-  wpmDisplay.innerHTML = data.wmp.valueOf();
-  rankDisplay.innerHTML = rank.valueOf();
+  seconds.innerHTML = finalTime;
+  wpmDisplay.innerHTML = finalWmp;
+  rankDisplay.innerHTML = finalRank;
 })
 
 socket.on('leaderboard', (players)=> {
@@ -110,19 +112,17 @@ function startGame() {
   time = 0;
 
   setInterval(countup, 1000);
-
   //Check wpm
   setInterval(updateWpm, 1000);
-
 }
 function countdown()
 {
-    currentWord.innerHTML = "3        ";
+    currentWord.innerHTML = "3";
     window.setTimeout(function(){
-      currentWord.innerHTML = "    2    ";
+      currentWord.innerHTML = "2";
       window.setTimeout(function(){
-        currentWord.innerHTML = "        1";
-        startGame();
+        currentWord.innerHTML = "1";
+        window.setTimeout(function(){startGame();},1000);
       },1000);
     },1000);
 }
