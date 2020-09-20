@@ -8,7 +8,6 @@ let rank = 0;
 var players;
 
 //interval variables
-var countup;
 var updatewpm;
 
 //socket
@@ -39,6 +38,20 @@ socket.on('sendDifficulty', (data) => {
   rank = data.rank;
 
 })
+// Countdown timer
+socket.on('time', (data) =>{
+
+  if (data.time <= 10) {
+    document.getElementById("time").style.color = "red";
+  }
+  else {
+    document.getElementById("time").style.color = "white";
+  }
+  // Show time
+  timeDisplay.innerHTML = data.time;
+  elapsed = data.elapsed;
+  //console.log("WPM: " + wpm + "Score: " + score + "\nTime: " + time);
+})
 
 socket.on('end', (data)=> {
 
@@ -48,7 +61,6 @@ socket.on('end', (data)=> {
   } else {
     currentWord.innerHTML = "You Win, " + data.name + "!";
   }
-  clearInterval(countup);
   clearInterval(updatewpm);
 
   //Displays Game Over screem
@@ -57,10 +69,12 @@ socket.on('end', (data)=> {
   seconds.innerHTML = time;
   wpmDisplay.innerHTML = wmp;
   rankDisplay.innerHTML = rank + 1;
+
+  socket.disconnect();
 })
 
 socket.on('leaderboard', (players)=> {
-  players = players;
+  this.players = players;
   firstRank.innerHTML = "1. " + players[0].name;
   secondRank.innerHTML = "2. " + players[1].name;
   thirdRank.innerHTML = "3. " + players[2].name;
@@ -68,7 +82,7 @@ socket.on('leaderboard', (players)=> {
 })
 
 let wpm = 0;
-let time = 0;
+let elapsed = 0;
 let score = 0;
 let isPlaying;
 let countDown = 30;
@@ -116,10 +130,7 @@ function startGame() {
   // Start matching on word input
   wordInput.addEventListener('input', startMatch);
   // Call countdown every second
-  time = 0;
 
-  countup = setInterval(countup, 1000);
-  //Check wpm
   updatewmp = setInterval(updateWpm, 1000);
 }
 function countdown()
@@ -153,7 +164,7 @@ function startMatch() {
 }
 
 function updateWpm() {
-    wpm = Math.round((score/time)*60);
+    wpm = Math.round((score/elapsed)*60);
     wpmDisplay.innerHTML = wpm;
     rankDisplay.innerHTML = rank + 1;
     socket.emit('wpm', wpm);
@@ -190,25 +201,4 @@ function showWord() {
   const randIndex = Math.floor(Math.random() * words.length);
   // Output random word
   currentWord.innerHTML = words[randIndex];
-}
-
-// Countdown timer
-function countup() {
-  if (countDown == 0) {
-    //eliminate someone
-    socket.emit()
-
-    countDown = 30;
-  }
-  if (countDown <= 10) {
-    document.getElementById("time").style.color = "red";
-  }
-  else {
-    document.getElementById("time").style.color = "white";
-  }
-  countDown--;
-  time++;
-  // Show time
-  timeDisplay.innerHTML = countDown;
-  //console.log("WPM: " + wpm + "Score: " + score + "\nTime: " + time);
 }
