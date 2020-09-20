@@ -16,6 +16,7 @@
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="css/styles.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" integrity="sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA==" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" type="image/png" href="./assets/img/favicon_io/favicon-32x32.png"/>
 </head>
 
 <body id="page-top">
@@ -33,6 +34,17 @@
     </div>
   </header>
 
+  <!-- Listen for keypress (enter) when in text-field-->
+<script>
+  var input = document.getElementById("text-field");
+  input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+     event.preventDefault();
+     document.getElementById("join-button").click();
+    }
+  });
+  </script>
+
 
   <!-- Bootstrap core JS-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,7 +57,6 @@
 
 
 
-  ethan, [Sep 19, 2020 at 8:15:34 PM]:
   <!-- Generate Falling Letters-->
   <script>
     (async function() {
