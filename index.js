@@ -171,6 +171,8 @@ function eliminateLowest() {
 
     selectionSort();
 
+
+
     newPlayers = [];
 
     for (let k = 0; k < players.length; k++) {
@@ -182,15 +184,33 @@ function eliminateLowest() {
     }
     players = newPlayers;
 
+
+    if (players.length == 2)
+    {
+      io.to(players[0].id).emit("end", {
+        name: players[0].name,
+        wpm: players[0].wpm,
+        win: true
+      });
+      io.to(players[1].id).emit("end", {
+        name: players[1].name,
+        wpm: players[1].wpm,
+        win: false
+      });
+
+      console.log("Eliminating " + name + "(" + id + ")");
+      inGame=false;
+    }
+    //collects information of the person being eliminated
     var name = players[players.length - 1].name;
     var wpm = players[players.length - 1].wpm;
     var id = players[players.length - 1].id;
 
-    numberOfPlayers--;
-
+    //removes last person
     players.splice(players.length - 1, 1);
 
-    //If last person alive !!
+
+    //if last person alive !!
     if (players.length == 1) {
       io.to(players[0].id).emit("end", {
         name: players[0].name,
