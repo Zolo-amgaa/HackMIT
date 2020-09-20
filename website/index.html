@@ -34,6 +34,17 @@
     </div>
   </header>
 
+  <!-- Listen for keypress (enter) when in text-field-->
+<script>
+  var input = document.getElementById("text-field");
+  input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+     event.preventDefault();
+     document.getElementById("join-button").click();
+    }
+  });
+  </script>
+
 
   <!-- Bootstrap core JS-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
