@@ -5683,6 +5683,7 @@ a.badge-black:focus, a.badge-black.focus {
   position: relative;
   display: block;
   padding: 0.75rem 0.5rem;
+  font-size: 32px;
   color: white;
   background-color: #132743;
   border: 1px solid #132743;
