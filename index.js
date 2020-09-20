@@ -193,8 +193,8 @@ function eliminateLowest() {
         win: true
       });
       io.to(players[1].id).emit("end", {
-        name: layers[1].name,
-        wpm: layers[1].wpm,
+        name: players[1].name,
+        wpm: players[1].wpm,
         win: false
       });
 

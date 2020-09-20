@@ -10,7 +10,7 @@ var players;
 
 //interval variables
 var countup;
-var updateWpm;
+var updatewpm;
 
 //socket
 var socket = io.connect();
@@ -48,8 +48,8 @@ socket.on('end', (data)=> {
   } else {
     currentWord.innerHTML = "You Win, " + data.name + "!";
   }
-  clearInterval(countUp);
-  clearInterval(updateWpm);
+  clearInterval(countup);
+  clearInterval(updatewpm);
 
   //Displays Game Over screem
   wordInput.style.display = "none";
@@ -118,9 +118,9 @@ function startGame() {
   // Call countdown every second
   time = 0;
 
-  var countup = setInterval(countup, 1000);
+  countup = setInterval(countup, 1000);
   //Check wpm
-  var updateWmp = setInterval(updateWpm, 1000);
+  updatewmp = setInterval(updateWpm, 1000);
 }
 function countdown()
 {
